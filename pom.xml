@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.0.M2</version>
+	</parent>
+
+	<groupId>com.github</groupId>
+	<artifactId>platform</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>platform</name>
+	<url>http://maven.apache.org</url>
+
+	<description>platform父pom, 对jar版本，仓库进行管理</description>
+
+	<properties>
+		<!-- Basic Setting -->
+		<global.version>0.0.1-SNAPSHOT</global.version>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Spring Boot、Cloud Setting -->
+		<spring.boot.version>2.0.0.M2</spring.boot.version>
+		<spring.cloud.version>Finchley.M2</spring.cloud.version>
+	</properties>
+
+	<pluginRepositories>
+        <pluginRepository>
+            <id>repository.spring.release</id>
+            <name>Spring GA Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+		</repository>
+		<repository>
+			<id>aliyun</id>
+			<name>aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>repo.spring.io</id>
+			<name>Spring Release Repository</name>
+			<url>https://repo.spring.io/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>repo.spring.io</id>
+			<name>Spring Snapshot Repository</name>
+			<url>https://repo.spring.io/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<pluginManagement>
+		<plugins>
+			<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<!-- maven-compiler-plugin:编译插件(maven-compiler-plugin用来编译Java代码) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<!-- 源代码使用的开发版本 -->
+					<source>${jdk.version}</source>
+					<!-- 需要生成的目标class文件的编译版本 -->
+					<target>${jdk.version}</target>
+					<!-- 一般而言,target与source是保持一致的,但是,有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk,源代码中需要没有使用低版本jdk中不支持的语法),会存在target不同于source的情况 -->
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- 跳过单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<!-- maven-assembly-plugin:处理资源 (maven-resources-plugin则用来处理资源文件.默认的主资源文件目录是src/main/resources,很多用户会需要添加额外的资源文件目录,这个时候就可以通过配置maven-resources-plugin来实现.) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+		</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- 开发者信息 -->
+	<developers>
+		<developer>
+			<name>YuanWei</name>
+			<id>Wei.Yuan</id>
+			<email>ywdeveloper@aliyun.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<modules>
+	<module>platform-common</module>
+	<module>platform-model</module>
+	<module>platform-sys-cloud</module>
+	<module>platform-eureka-server</module>
+	<module>platform-wechat-cloud</module>
+	<module>platform-wechat-api</module>
+	<module>platform-server-config</module>
+	</modules>
+</project>

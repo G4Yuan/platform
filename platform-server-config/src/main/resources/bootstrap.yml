@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: platform-server-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/G4Yuan/platform/
+          searchPaths:  platform-config
+server:
+  port: 12800
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/
+#spring.cloud.config.label=master
+#spring.cloud.config.server.git.username= your username
+#spring.cloud.config.server.git.password= your password
+#eureka.instance.preferIpAddress=true
+
+
